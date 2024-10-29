@@ -1,0 +1,35 @@
+# Python virtual environment
+venv/
+env/
+.env/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Transcriptions folder content
+Transcriptions/*.mp3
+Transcriptions/*.mp4
+Transcriptions/*.wav
+Transcriptions/*.m4a
+Transcriptions/*.aac
+Transcriptions/*.ogg
+Transcriptions/*.flac
+Transcriptions/*.txt
+Transcriptions/*.json
+
+# Keep the Transcriptions folder but ignore its contents
+!Transcriptions/.gitkeep
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Whisper model cache
+*.pt
