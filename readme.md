@@ -1,85 +1,113 @@
-# Video to Text Transcriber
+# Video Accessibility App
 
-Trascrivi automaticamente file audio e video in testo utilizzando Python e Whisper di OpenAI. Questa soluzione è completamente gratuita e illimitata, senza dipendere da servizi cloud a pagamento. Tutto viene eseguito localmente sul tuo computer.
+**Una soluzione per rendere i contenuti video più accessibili per tutti.**
 
-## 🚀 Caratteristiche
+## Descrizione
 
-- **Trascrizione Locale**: Elaborazione completamente offline sul tuo PC
-- **Supporto Multi-formato**: Compatibile con vari formati audio/video (mp3, wav, mp4, etc.)
-- **Multi-lingua**: Riconoscimento automatico della lingua con alta precisione
-- **Organizzazione Automatica**: Le trascrizioni vengono salvate con timestamp per facile riferimento
-- **Gratuito e Illimitato**: Nessun costo o limite di utilizzo
+Questa applicazione nasce dall’esigenza di rendere i contenuti video accessibili a un pubblico più ampio, superando le barriere uditive, linguistiche ed economiche. L'app consente di:
 
-## 📋 Requisiti di Sistema
+- **Convertire i video in audio**.
+- **Trascrivere l’audio in testo** per chi ha difficoltà uditive.
+- **Tradurre il testo** in diverse lingue (attualmente solo in inglese, ma sono previste più lingue in futuro).
 
-- Python 3.7 o superiore
-- FFmpeg installato sul sistema
-- Spazio su disco per i modelli di Whisper
-- RAM consigliata: minimo 8GB
+L'obiettivo è offrire uno strumento versatile e facilmente utilizzabile, che possa essere impiegato da chiunque per accedere a informazioni contenute in video, superando ostacoli uditivi o linguistici.
 
-## 🔧 Installazione
+## Funzionalità
 
-1. Clona il repository:
-```bash
-git clone [URL-del-tuo-repository]
-cd video-to-text
-```
+- **Estrazione Audio**: Converte video di YouTube in file audio.
+- **Trascrizione del testo**: Trasforma l’audio estratto in testo, utile per persone con problemi di udito.
+- **Traduzione**: Traduce il testo trascritto in una lingua di destinazione (attualmente solo inglese).
+- **Interfaccia intuitiva**: Visualizza lo stato di avanzamento delle operazioni in tempo reale.
 
-2. Crea un ambiente virtuale:
-```bash
-python -m venv venv
-.\venv\Scripts\activate  # Windows
-source venv/bin/activate # Linux/Mac
-```
+## Tecnologie Utilizzate
 
-3. Installa le dipendenze:
-```bash
-pip install -r requirements.txt
-```
+### Backend
+- **Flask**: Framework di microservizi per creare l'API REST.
+- **Whisper**: Modello di machine learning per la trascrizione e traduzione multilingue.
+- **yt-dlp**: Strumento per scaricare audio/video da YouTube.
+- **Werkzeug**: Per la gestione sicura delle richieste e delle operazioni di upload dei file.
+- **CORS**: Configurazione delle policy di cross-origin per una gestione sicura delle richieste.
 
-## 📦 Struttura del Progetto
+### Frontend
+- **React**: Libreria per la costruzione dell’interfaccia utente.
+- **Componenti UI personalizzati**: Per una migliore esperienza utente.
+- **Fetch API**: Per la comunicazione asincrona tra frontend e backend.
 
-```
-video-to-text/
-│
-├── Transcriptions/        # Cartella per file audio e trascrizioni
-│   └── .gitkeep
-├── script.py             # Script principale
-├── text.py              # Funzioni di trascrizione
-├── requirements.txt     # Dipendenze Python
-└── README.md           # Documentazione
-```
+### Altre Librerie
+- **Python**: Linguaggio di programmazione utilizzato per il backend.
+- **JavaScript (ES6)**: Linguaggio di programmazione utilizzato per il frontend.
 
-## 🎯 Utilizzo
+## Requisiti
 
-1. Inserisci i tuoi file audio/video nella cartella `Transcriptions`
-2. Aggiungi i nomi dei file al `audio_list.json`
-3. Esegui lo script:
-```bash
-python text.py
-```
-4. Le trascrizioni verranno salvate nella cartella `Transcriptions` con timestamp
+- **Python 3.x** (consigliata versione 3.8 o superiore)
+- **Node.js** e **npm** (per eseguire il frontend React)
+- **yt-dlp** (può essere installato tramite pip)
 
-## ⚙️ Configurazione
+## Installazione
 
-Il programma supporta varie opzioni di Whisper:
-- Modelli disponibili: tiny, base, small, medium, large
-- Supporto per traduzione automatica
-- Riconoscimento automatico della lingua
+### Backend (Flask)
 
-## 📝 Note
+1. **Clona il repository:**
+   ```bash
+   git clone https://github.com/tuo-username/video-accessibility-app.git
+   cd video-accessibility-app
+   ```
 
-- La prima esecuzione scaricherà il modello Whisper selezionato
-- Il tempo di elaborazione dipende dalla lunghezza del file e dalla potenza del PC
-- È consigliato utilizzare file audio di buona qualità per risultati migliori
+2. **Crea e attiva un ambiente virtuale:**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Su Windows: venv\Scripts\activate
+   ```
 
-## 🤝 Contribuire
+3. **Installa le dipendenze richieste:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Sentiti libero di:
-1. Fare fork del repository
-2. Creare un branch per le tue modifiche
-3. Inviare una Pull Request
+4. **Avvia il server Flask:**
+   ```bash
+   python api.py
+   ```
 
-## 📄 Licenza
+### Frontend (React)
 
-Questo progetto è distribuito con licenza MIT. Vedi il file `LICENSE` per maggiori dettagli.
+1. **Naviga nella cartella `frontend` e installa le dipendenze:**
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+2. **Avvia l'applicazione React:**
+   ```bash
+   npm start
+   ```
+
+3. **Apri l'applicazione in un browser all'indirizzo:** `http://localhost:3000`
+
+## Utilizzo
+
+1. **Inserisci l'URL di un video di YouTube** nell'app per estrarre l'audio.
+2. **Carica il file audio** per trascriverlo in testo.
+3. **Seleziona la lingua** per tradurre il testo (al momento solo inglese).
+4. **Visualizza e scarica** il testo trascritto o tradotto.
+
+## Prossimi Sviluppi
+
+- Supporto per il caricamento di file video locali.
+- Supporto per diversi formati video e audio (es. `.mp4`, `.wav`, `.ogg`).
+- Estensione del supporto alla traduzione in più lingue.
+
+## Contributi
+
+Siete benvenuti a contribuire al progetto! Per iniziare:
+
+1. Fai un fork del progetto.
+2. Crea un branch per la tua nuova feature (`git checkout -b feature/nuova-funzionalità`).
+3. Effettua i tuoi cambiamenti e committali (`git commit -am 'Aggiunta nuova funzionalità'`).
+4. Effettua un push del branch (`git push origin feature/nuova-funzionalità`).
+5. Invia una pull request.
+
+## Licenza
+
+Questo progetto è distribuito sotto licenza MIT. Consulta il file [LICENSE](./LICENSE) per maggiori informazioni.
+
