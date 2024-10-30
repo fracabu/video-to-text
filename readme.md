@@ -49,7 +49,7 @@ L'obiettivo è offrire uno strumento versatile e facilmente utilizzabile, che po
 
 1. **Clona il repository:**
    ```bash
-   [git clone https://github.com/tuo-username/video-accessibility-app.git](https://github.com/fracabu/video-to-text.git)
+   [git clone https://github.com/fracabu/video-to-text.git]
    cd video-accessibility-app
    ```
 
