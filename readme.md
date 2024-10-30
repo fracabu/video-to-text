@@ -1,6 +1,7 @@
 # Video-to-Text
 
-![image](https://github.com/user-attachments/assets/cd058958-2a78-445c-9c4d-087aae429743)
+![image](https://github.com/user-attachments/assets/1017dbf9-fc73-4758-82ad-ffa3d09df3e0)
+
 
 
 **Una soluzione per rendere i contenuti video più accessibili per tutti.**
