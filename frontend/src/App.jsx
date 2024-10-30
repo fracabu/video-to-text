@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Youtube, FileAudio, Upload, Loader2, Volume2, FileText } from 'lucide-react';
 import { Button } from './components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs';
-import { Progress } from './components/ui/progress';
+import { Progress } from './components/ui/progress'; // Importa il componente personalizzato Progress
 
 function App() {
   const [inputType, setInputType] = useState('youtube');
@@ -15,13 +15,14 @@ function App() {
   const [audioFile, setAudioFile] = useState(null);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('convert');
+  const [translate, setTranslate] = useState(false); // Nuovo stato per il toggle di traduzione
   const [files, setFiles] = useState({
     audio: [],
     transcriptions: [],
     translations: [],
   });
 
-  const POLLING_INTERVAL = 1000; // 1 secondo
+  const POLLING_INTERVAL = 10000; // 10 secondo
 
   // Funzione per caricare file lato frontend
   const handleFileUpload = (e) => {
@@ -160,7 +161,7 @@ function App() {
       const response = await fetch('http://localhost:5000/api/transcribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ filename: audioFile }),
+        body: JSON.stringify({ filename: audioFile, translate }), // Passa il parametro `translate`
       });
 
       const data = await response.json();
@@ -241,35 +242,56 @@ function App() {
                 </TabsContent>
 
                 <TabsContent value="transcribe">
-                  <div className="space-y-4">
-                    {audioFile ? (
-                      <>
-                        <div className="p-4 bg-green-50 dark:bg-green-900/30 rounded-md">
-                          <p className="text-green-600 dark:text-green-400">File audio pronto: {audioFile}</p>
-                        </div>
-                        {isTranscribing && (
-                          <div className="space-y-2">
-                            <Progress value={transcriptionProgress} />
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                              Trascrizione in corso: {transcriptionProgress}%
-                            </p>
-                          </div>
-                        )}
-                        <Button onClick={handleTranscription} className="w-full py-6" disabled={isTranscribing}>
-                          {isTranscribing ? (
-                            <>
-                              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                              Trascrizione in corso...
-                            </>
-                          ) : (
-                            'Trascrivi in Testo'
-                          )}
-                        </Button>
-                      </>
-                    ) : (
-                      <div className="text-center text-gray-500 dark:text-gray-400">Prima converti un video in audio</div>
-                    )}
-                  </div>
+                <div className="space-y-4">
+  {audioFile ? (
+    <>
+      <div className="p-4 bg-green-50 dark:bg-green-900/30 rounded-md">
+        <p className="text-green-600 dark:text-green-400">File audio pronto: {audioFile}</p>
+      </div>
+      <div className="flex items-center space-x-2">
+        <label htmlFor="languageSelect" className="text-gray-700 dark:text-gray-300">
+          Traduci l'audio in:
+        </label>
+        <select
+          id="languageSelect"
+          value={translate}
+          onChange={(e) => setTranslate(e.target.value)}
+          className="p-2 border dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-md"
+        >
+          <option value="en">Inglese</option>
+          <option value="es">Spagnolo</option>
+          <option value="fr">Francese</option>
+          <option value="de">Tedesco</option>
+          <option value="it">Italiano</option>
+          <option value="ja">Giapponese</option>
+          <option value="ko">Coreano</option>
+          <option value="zh">Cinese</option>
+        </select>
+      </div>
+      {isTranscribing && (
+        <div className="space-y-2">
+          <Progress value={transcriptionProgress} />
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Trascrizione in corso: {transcriptionProgress}%
+          </p>
+        </div>
+      )}
+      <Button onClick={handleTranscription} className="w-full py-6" disabled={isTranscribing}>
+        {isTranscribing ? (
+          <>
+            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+            Trascrizione in corso...
+          </>
+        ) : (
+          'Trascrivi in Testo'
+        )}
+      </Button>
+    </>
+  ) : (
+    <div className="text-center text-gray-500 dark:text-gray-400">Prima converti un video in audio</div>
+  )}
+</div>
+
                 </TabsContent>
               </Tabs>
 
@@ -285,7 +307,7 @@ function App() {
           <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-xl p-6">
             <h2 className="text-xl font-semibold mb-4 dark:text-white">File Generati</h2>
             <Tabs defaultValue="audio">
-              <TabsList className="grid grid-cols-2 mb-4">
+              <TabsList className="grid grid-cols-3 mb-4">
                 <TabsTrigger value="audio">
                   <Volume2 className="mr-2 h-4 w-4" />
                   Audio
@@ -293,6 +315,10 @@ function App() {
                 <TabsTrigger value="text">
                   <FileText className="mr-2 h-4 w-4" />
                   Testi
+                </TabsTrigger>
+                <TabsTrigger value="translations">
+                  <FileText className="mr-2 h-4 w-4" />
+                  Traduzioni
                 </TabsTrigger>
               </TabsList>
 
@@ -320,6 +346,20 @@ function App() {
                     ))
                   ) : (
                     <p className="text-sm text-gray-500 dark:text-gray-400">Nessun file di testo trovato.</p>
+                  )}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="translations">
+                <div className="space-y-2">
+                  {files.translations.length > 0 ? (
+                    files.translations.map((file, index) => (
+                      <div key={index} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+                        <p className="text-sm">{file}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Nessun file di traduzione trovato.</p>
                   )}
                 </div>
               </TabsContent>

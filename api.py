@@ -107,13 +107,13 @@ def get_progress():
         'conversion_progress': conversion_progress,
         'upload_progress': upload_progress
     })
-
 @app.route('/api/transcribe', methods=['POST'])
 def transcribe():
     try:
         data = request.json
         filename = data.get('filename')
-        
+        language = data.get('translate', 'en')  # Imposta 'en' (inglese) come predefinito
+
         if not filename:
             return jsonify({'error': 'Nome file non fornito'}), 400
 
@@ -123,25 +123,30 @@ def transcribe():
         if not os.path.exists(file_path):
             return jsonify({'error': 'File audio non trovato'}), 404
 
-        print(f"Inizio trascrizione del file: {filename}")
-        
-        print("Caricamento del modello Whisper...")
+        print(f"Inizio trascrizione del file: {filename} in {language}")
+
+        # Caricamento del modello Whisper
         model = whisper.load_model("base")
-        
-        print("Trascrizione in corso...")
-        result = model.transcribe(file_path)
-        
-        transcript_filename = f"trascrizione_{os.path.splitext(filename)[0]}.txt"
-        transcript_path = os.path.join(folder_path, transcript_filename)
-        
-        with open(transcript_path, 'w', encoding='utf-8') as f:
+
+        # Trascrizione e traduzione
+        result = model.transcribe(
+            file_path,
+            language=language,  # Specifica la lingua
+            task="translate" if language != 'it' else "transcribe"  # Task di traduzione solo se diverso da italiano
+        )
+
+        # Nome del file di output basato sul tipo di operazione
+        output_filename = f"traduzione_{os.path.splitext(filename)[0]}_{language}.txt"
+        output_path = os.path.join(folder_path, output_filename)
+
+        with open(output_path, 'w', encoding='utf-8') as f:
             f.write(result["text"])
 
         return jsonify({
             'success': True,
-            'message': 'Audio trascritto con successo',
+            'message': f"Audio tradotto in {language} con successo",
             'text': result["text"],
-            'transcript_file': transcript_filename
+            'output_file': output_filename
         })
 
     except Exception as e:
@@ -151,15 +156,18 @@ def transcribe():
             'error': str(e)
         }), 500
 
+# Modifica anche la funzione get_files per includere le traduzioni
 @app.route('/api/files', methods=['GET'])
 def get_files():
     try:
         audio_files = [f for f in os.listdir(TRANSCRIPTION_FOLDER) if f.endswith(('.mp3', '.wav'))]
-        transcription_files = [f for f in os.listdir(TRANSCRIPTION_FOLDER) if f.endswith('.txt')]
+        transcription_files = [f for f in os.listdir(TRANSCRIPTION_FOLDER) if f.startswith('trascrizione_')]
+        translation_files = [f for f in os.listdir(TRANSCRIPTION_FOLDER) if f.startswith('traduzione_')]
 
         return jsonify({
             'audio': audio_files,
-            'transcriptions': transcription_files
+            'transcriptions': transcription_files,
+            'translations': translation_files
         })
 
     except Exception as e:
@@ -168,7 +176,7 @@ def get_files():
             'success': False,
             'error': str(e)
         }), 500
-
+        
 if __name__ == '__main__':
     print("Starting Flask server...")
     print("Available endpoints:")

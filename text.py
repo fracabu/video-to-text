@@ -45,10 +45,11 @@ def update_audio_list(folder_path, audio_filename):
         print(f"Errore durante l'aggiornamento di audio_list.json: {str(e)}")
         raise
 
-def transcribe_audio(audio_path):
+def transcribe_audio(audio_path, language='en'):
     try:
         model = whisper.load_model("base")
-        result = model.transcribe(audio_path)
+        task = "transcribe" if language == 'it' else "translate"  # Scegli il task in base alla lingua
+        result = model.transcribe(audio_path, language=language, task=task)
         return result
     except Exception as e:
         print(f"Errore durante la trascrizione: {str(e)}")
@@ -61,6 +62,9 @@ if __name__ == "__main__":
 
     # Richiedi l'URL del video
     video_input = input("Inserisci l'URL del video di YouTube: ")
+    
+    # Richiedi la lingua di traduzione
+    language_input = input("Inserisci la lingua per la trascrizione (es. 'en' per inglese, 'de' per tedesco, ecc.): ")
 
     # Scarica solo l'audio dal video
     audio_filename = download_youtube_audio(video_input, folder_path)
@@ -68,5 +72,9 @@ if __name__ == "__main__":
     # Aggiorna la lista degli audio scaricati
     update_audio_list(folder_path, audio_filename)
 
-    print(f"Download completato. Il file audio è stato salvato come: {audio_filename}")
-    print("Il nome del file è stato aggiunto a 'audio_list.json' nella cartella Transcriptions.")
+    # Trascrivi l'audio nella lingua specificata
+    audio_path = os.path.join(folder_path, audio_filename)
+    result = transcribe_audio(audio_path, language=language_input)
+
+    print("Testo trascritto/tradotto:")
+    print(result["text"])
