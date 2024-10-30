@@ -1,66 +1,72 @@
-
 import os
-import whisper
-import json
+import yt_dlp
 from datetime import datetime
+import json
+import whisper
 
-def transcribe_audio(audio_path, model_name='base'):
-    print(f"Caricamento del modello {model_name}...")
-    model = whisper.load_model(model_name)
-    
-    print(f"Inizio trascrizione di {audio_path}...")
-    result = model.transcribe(audio_path )
-    # result = model.transcribe(audio_path, language='it')
-    # result = model.transcribe(audio_path, task='translate')
-
-
-    return result['text']
-
-def save_transcription(transcription, folder_path, audio_filename):
+def download_youtube_audio(url, folder_path):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    transcription_filename = f"trascrizione_{timestamp}_{audio_filename}.txt"
-    file_path = os.path.join(folder_path, transcription_filename)
-    with open(file_path, 'w', encoding='utf-8') as file:
-        file.write(transcription)
-    return file_path
+    output_filename = f"audio_{timestamp}.mp3"
+    output_path = os.path.join(folder_path, output_filename)
+    
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'outtmpl': output_path,
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192',
+        }],
+    }
+    
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
+    
+    if not os.path.exists(output_path) and os.path.exists(output_path + ".mp3"):
+        os.rename(output_path + ".mp3", output_path)
+    
+    print(f"Audio scaricato in: {output_path}")
+    return output_filename
 
-def get_audio_list(folder_path):
+def update_audio_list(folder_path, audio_filename):
     list_file = os.path.join(folder_path, 'audio_list.json')
-    if os.path.exists(list_file):
-        with open(list_file, 'r') as f:
-            return json.load(f)
-    return []
+    try:
+        if os.path.exists(list_file):
+            with open(list_file, 'r') as f:
+                audio_list = json.load(f)
+        else:
+            audio_list = []
+        
+        audio_list.append(audio_filename)
+        
+        with open(list_file, 'w') as f:
+            json.dump(audio_list, f, indent=4)
+    except Exception as e:
+        print(f"Errore durante l'aggiornamento di audio_list.json: {str(e)}")
+        raise
 
-# Percorso della cartella
-folder_path = 'Transcriptions'
+def transcribe_audio(audio_path):
+    try:
+        model = whisper.load_model("base")
+        result = model.transcribe(audio_path)
+        return result
+    except Exception as e:
+        print(f"Errore durante la trascrizione: {str(e)}")
+        raise
 
-# Ottieni la lista degli audio disponibili
-audio_list = get_audio_list(folder_path)
+# Solo se il file viene eseguito direttamente
+if __name__ == "__main__":
+    folder_path = 'Transcriptions'
+    os.makedirs(folder_path, exist_ok=True)
 
-if not audio_list:
-    print("Nessun file audio disponibile per la trascrizione.")
-    exit()
+    # Richiedi l'URL del video
+    video_input = input("Inserisci l'URL del video di YouTube: ")
 
-# Mostra la lista degli audio disponibili
-print("File audio disponibili:")
-for i, audio in enumerate(audio_list, 1):
-    print(f"{i}. {audio}")
+    # Scarica solo l'audio dal video
+    audio_filename = download_youtube_audio(video_input, folder_path)
 
-# Chiedi all'utente di selezionare un file
-selection = int(input("Seleziona il numero del file audio da trascrivere: ")) - 1
+    # Aggiorna la lista degli audio scaricati
+    update_audio_list(folder_path, audio_filename)
 
-if 0 <= selection < len(audio_list):
-    selected_audio = audio_list[selection]
-    audio_path = os.path.join(folder_path, selected_audio)
-
-    # Trascrivi l'audio
-    transcription = transcribe_audio(audio_path)
-
-    # Salva la trascrizione
-    transcription_path = save_transcription(transcription, folder_path, selected_audio)
-
-    print(f"Trascrizione completata e salvata in: {transcription_path}")
-    print("Anteprima della trascrizione:")
-    print(transcription[:100] + "...")
-else:
-    print("Selezione non valida.")
+    print(f"Download completato. Il file audio è stato salvato come: {audio_filename}")
+    print("Il nome del file è stato aggiunto a 'audio_list.json' nella cartella Transcriptions.")
