@@ -1,4 +1,4 @@
-# Video Accessibility App
+# Video-to-Text
 
 **Una soluzione per rendere i contenuti video più accessibili per tutti.**
 
@@ -8,7 +8,7 @@ Questa applicazione nasce dall’esigenza di rendere i contenuti video accessibi
 
 - **Convertire i video in audio**.
 - **Trascrivere l’audio in testo** per chi ha difficoltà uditive.
-- **Tradurre il testo** in diverse lingue (attualmente solo in inglese, ma sono previste più lingue in futuro).
+- **Tradurre il testo** in diverse lingue (attualmente solo in inglese, con piani di espansione per altre lingue in futuro).
 
 L'obiettivo è offrire uno strumento versatile e facilmente utilizzabile, che possa essere impiegato da chiunque per accedere a informazioni contenute in video, superando ostacoli uditivi o linguistici.
 
@@ -16,7 +16,7 @@ L'obiettivo è offrire uno strumento versatile e facilmente utilizzabile, che po
 
 - **Estrazione Audio**: Converte video di YouTube in file audio.
 - **Trascrizione del testo**: Trasforma l’audio estratto in testo, utile per persone con problemi di udito.
-- **Traduzione**: Traduce il testo trascritto in una lingua di destinazione (attualmente solo inglese).
+- **Traduzione del testo**: Traduce il testo trascritto in una lingua di destinazione (attualmente solo inglese).
 - **Interfaccia intuitiva**: Visualizza lo stato di avanzamento delle operazioni in tempo reale.
 
 ## Tecnologie Utilizzate
@@ -50,7 +50,7 @@ L'obiettivo è offrire uno strumento versatile e facilmente utilizzabile, che po
 1. **Clona il repository:**
    ```bash
    git clone https://github.com/fracabu/video-to-text.git
-   cd video-accessibility-app
+   cd video-to-text
    ```
 
 2. **Crea e attiva un ambiente virtuale:**
