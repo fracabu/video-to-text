@@ -1,6 +1,7 @@
 # Video-to-Text
 
-![image](https://github.com/user-attachments/assets/1017dbf9-fc73-4758-82ad-ffa3d09df3e0)
+![image](https://github.com/user-attachments/assets/6c6ebd12-1fde-462a-b410-c21a2a977977)
+
 
 
 
