@@ -1,6 +1,6 @@
 # 🎥 Video-to-Text
 
-![Video-to-Text Banner](https://github.com/fracabu/video-to-text/assets/banner.png)
+![image](https://github.com/user-attachments/assets/6c6ebd12-1fde-462a-b410-c21a2a977977)
 
 **Rendi i contenuti video accessibili a tutti.**
 
