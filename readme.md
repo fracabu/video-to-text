@@ -93,6 +93,34 @@
 
 3. **Apri l'applicazione in un browser all'indirizzo:** `http://localhost:3000`
 
+## 🚀 Avvio dell'Applicazione Completa
+
+Per far funzionare l'applicazione completa, avrai bisogno di aprire due terminali:
+
+1. **Primo terminale (Backend - Flask):**
+   ```bash
+   cd C:\Users\utente\video-to-text
+   .\venv\Scripts\activate
+   python api.py
+   ```
+   Questo avvierà il server Flask su [http://localhost:5000](http://localhost:5000).
+
+2. **Secondo terminale (Frontend - React):**
+   ```bash
+   cd C:\Users\utente\video-to-text\frontend
+   npm run dev
+   ```
+   Questo avvierà il server di sviluppo React su [http://localhost:5173](http://localhost:5173).
+
+### Flusso di Lavoro dell'Applicazione
+
+1. L'interfaccia React (frontend) mostra la UI dove puoi inserire l'URL di YouTube.
+2. Quando fai una richiesta, il frontend comunica con il backend Flask.
+3. Il backend processa la richiesta (download video, conversione, trascrizione).
+4. Il risultato viene rimandato al frontend e mostrato nell'interfaccia.
+
+**Consiglio:** Tieni aperti entrambi i terminali affiancati così puoi vedere i log sia del frontend che del backend mentre l'app è in esecuzione.
+
 ## 📝 Utilizzo
 
 1. **Inserisci l'URL di un video di YouTube** nell'app per estrarre l'audio.
