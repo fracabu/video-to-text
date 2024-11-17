@@ -1,6 +1,7 @@
 # 🎥 Video-to-Text
 
-![image](https://github.com/user-attachments/assets/6c6ebd12-1fde-462a-b410-c21a2a977977)
+![image](https://github.com/user-attachments/assets/6cb173af-dd3d-451b-9aec-64cd77af9171)
+
 
 **Rendi i contenuti video accessibili a tutti.**
 
