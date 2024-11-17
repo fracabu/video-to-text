@@ -64,6 +64,7 @@
    source venv/bin/activate  # Su Windows: venv\Scripts\activate
    ```
 
+
 3. **Installa le dipendenze richieste:**
 
    ```bash
@@ -103,6 +104,8 @@ Per far funzionare l'applicazione completa, avrai bisogno di aprire due terminal
    .\venv\Scripts\activate
    python api.py
    ```
+   ![image](https://github.com/user-attachments/assets/0c13d6f6-21db-47b3-8098-d4f06d938715)
+   
    Questo avvierà il server Flask su [http://localhost:5000](http://localhost:5000).
 
 2. **Secondo terminale (Frontend - React):**
@@ -110,6 +113,8 @@ Per far funzionare l'applicazione completa, avrai bisogno di aprire due terminal
    cd C:\Users\utente\video-to-text\frontend
    npm run dev
    ```
+   ![image](https://github.com/user-attachments/assets/33821deb-9d55-4d77-a204-419a7366edd1)
+
    Questo avvierà il server di sviluppo React su [http://localhost:5173](http://localhost:5173).
 
 ### Flusso di Lavoro dell'Applicazione
