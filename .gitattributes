@@ -1,0 +1,32 @@
+# Linguaggi principali utilizzati
+*.py linguaggio=Python # Backend: Flask e script per trascrizione/traduzione
+*.js linguaggio=JavaScript # Frontend: React
+*.jsx linguaggio=JavaScript # Frontend: Componenti React
+*.json linguaggio=JSON # Configurazioni o dati strutturati
+*.css linguaggio=CSS # Stile del frontend
+*.html linguaggio=HTML # Template HTML (se usati)
+
+# Configurazione di sistema e dipendenze
+requirements.txt linguaggio=plaintext # Dipendenze Python
+package.json linguaggio=JSON # Dipendenze Node.js per il frontend
+yarn.lock linguaggio=plaintext # Lockfile per Node.js (se presente)
+
+# Ignora cartelle e file generati automaticamente
+node_modules/* linguaggio=ignora
+venv/* linguaggio=ignora
+dist/* linguaggio=ignora
+build/* linguaggio=ignora
+__pycache__/* linguaggio=ignora
+*.log linguaggio=ignora
+
+# File statici e media
+*.mp4 linguaggio=ignora # Video caricati o scaricati
+*.wav linguaggio=ignora # File audio generati
+*.srt linguaggio=ignora # Sottotitoli generati
+*.txt linguaggio=plaintext # File di testo generati
+*.csv linguaggio=plaintext # File CSV generati
+
+# File di configurazione e script specifici
+api.py linguaggio=Python # File principale del backend
+script.py linguaggio=Python # Script per la trascrizione
+text.py linguaggio=Python # Script per la gestione del testo
