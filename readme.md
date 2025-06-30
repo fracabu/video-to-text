@@ -47,64 +47,107 @@
 - **Node.js** e **npm** (per eseguire il frontend React)
 - **yt-dlp** (installabile tramite pip)
 
-## 🚀 Installazione
+# 🚀 Avvio Locale su Windows
 
-### Backend (Flask)
+Questa guida spiega come avviare **Video-to-Text** in locale su Windows, con due terminali separati per backend e frontend.
 
-1. **Clona il repository:**
+---
 
-   ```bash
-   git clone https://github.com/fracabu/video-to-text.git
-   cd video-to-text
-   ```
+## 📦 Prerequisiti
 
-2. **Crea e attiva un ambiente virtuale:**
+* Python 3.8+
+* Node.js + npm
+* Git (opzionale, se vuoi clonare la repo)
 
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Su Windows: venv\Scripts\activate
-   ```
+---
 
+## 📁 Clona il repository
 
-3. **Installa le dipendenze richieste:**
+```bash
+git clone https://github.com/fracabu/video-to-text.git
+cd video-to-text
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-4. **Avvia il server Flask:**
+## 🖥️ Terminale 1 – Avvio Backend (Flask)
 
-   ```bash
-   python api.py
-   ```
+```bash
+cd video-to-text
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
+python api.py
+```
 
-### Frontend (React)
+✅ Il backend sarà attivo su: [http://localhost:5000](http://localhost:5000)
 
-1. **Naviga nella cartella `frontend` e installa le dipendenze:**
+---
 
-   ```bash
-   cd frontend
-   npm install
-   ```
+## 🌐 Terminale 2 – Avvio Frontend (React + Vite)
 
-2. **Avvia l'applicazione React:**
+```bash
+cd video-to-text\frontend
+npm install
+npm run dev
+```
 
-   ```bash
-   npm start
-   ```
+✅ Il frontend sarà attivo su: [http://localhost:5173](http://localhost:5173)
 
-3. **Apri l'applicazione in un browser all'indirizzo:** `http://localhost:3000`
+---
 
-## 🚀 Avvio dell'Applicazione Completa
+## 💡 Consigli
 
-Per far funzionare l'applicazione completa, avrai bisogno di aprire due terminali:
+* Tieni entrambi i terminali aperti:
 
-1. **Primo terminale (Backend - Flask):**
-   ```bash
-   cd C:\Users\utente\video-to-text
-   .\venv\Scripts\activate
-   python api.py
-   ```
+  * uno per `api.py`
+  * uno per `npm run dev`
+* Se vuoi aprire le porte al pubblico su Vite:
+
+  ```bash
+  npm run dev -- --host
+  ```
+
+---
+
+## 🔄 Flusso di Lavoro
+
+1. Inserisci URL YouTube o carica un file audio
+2. Il frontend comunica con l'API Flask
+3. Flask scarica/converte/trascrive l'audio
+4. Il testo viene mostrato nel frontend
+
+---
+
+## ✅ Test API
+
+Verifica il backend:
+
+```
+GET http://localhost:5000/
+```
+
+Dovresti ottenere:
+
+```json
+{"message": "API is working!"}
+```
+
+---
+
+## 📬 Supporto
+
+Per problemi o domande:
+
+* Email: [fracabu@gmail.com](mailto:fracabu@gmail.com)
+* LinkedIn: [Francesco Capurso](https://www.linkedin.com/in/francesco-~-capurso-5801031a9/)
+
+---
+
+## 📄 Licenza
+
+MIT License
+
    ![image](https://github.com/user-attachments/assets/0c13d6f6-21db-47b3-8098-d4f06d938715)
    
    Questo avvierà il server Flask su [http://localhost:5000](http://localhost:5000).
